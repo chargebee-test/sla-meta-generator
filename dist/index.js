@@ -6058,7 +6058,7 @@ exports.debug = debug; // for test
 /***/ 980:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-
+const core = __nccwpck_require__(847);
 const yaml = __nccwpck_require__(159);
 const fs   = __nccwpck_require__(147);
 var path = __nccwpck_require__(17)
@@ -6079,7 +6079,7 @@ module.exports = class MetaGenerator {
     createMetaFile() {
         try {
             console.log(process.env.GITHUB_WORKSPACE)
-            const specFiles = JSON.parse(PATHS);
+            const specFiles = JSON.parse(this.PATHS);
             specFiles.forEach(file => {
 
                 const filepath = process.env.GITHUB_WORKSPACE + "/" +file;
@@ -6101,7 +6101,7 @@ module.exports = class MetaGenerator {
     }
 
     writeInFile() {
-        const fileName = `${process.env.GITHUB_WORKSPACE}/${MICRO_SERVICE}-endpoints.json`
+        const fileName = `${process.env.GITHUB_WORKSPACE}/${this.MICRO_SERVICE}-endpoints.json`
         fs.writeFile(fileName, JSON.stringify(this.result,null,4), function (err, file) {
             if (err) throw err;
             console.log('Saved!');
@@ -6146,7 +6146,7 @@ module.exports = class MetaGenerator {
     
     processPathObject(path,pathObject){
         console.log("Processing Path : " +path)
-        METHODS.forEach(method => {
+        this.METHODS.forEach(method => {
             if(pathObject[method] != undefined && pathObject[method] != null){
                 output = processOperationObject(path, method, pathObject[method])
                 this.result.push(output)
@@ -6163,7 +6163,7 @@ module.exports = class MetaGenerator {
         output.sla_for_response_time = "M1"
         output.criticality = ""
         output.module = ""
-        output.micro_service = MICRO_SERVICE
+        output.micro_service = this.MICRO_SERVICE
         return output
     }
 
