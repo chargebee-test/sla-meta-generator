@@ -13049,6 +13049,7 @@ try {
 
         const filepath = process.env.GITHUB_WORKSPACE + "/" +file;
         const fileStats = fs.lstatSync(filepath)
+
         if(fileStats.isDirectory()) {
             processDirectory(filepath);
         } else if(fileStats.isFile()) {
@@ -13056,6 +13057,7 @@ try {
         }
     });
 } catch (error) {
+    console.error(error)
     core.setFailed(error.message);
 }
 
