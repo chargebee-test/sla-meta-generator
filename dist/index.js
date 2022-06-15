@@ -13111,6 +13111,7 @@ function processPathObject(path,pathObject){
 
 function processOperationObject(path, method, operationObject) {
     let output = {}
+    path = path.replaceAll(/{.*?}/ig,'([^/]+)')
     output.name = operationObject["operationId"]
     output.url = path
     output.method = method
