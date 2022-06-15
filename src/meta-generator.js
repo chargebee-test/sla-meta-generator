@@ -26,13 +26,13 @@ module.exports = class MetaGenerator {
                 const fileStats = fs.lstatSync(filepath)
 
                 if(fileStats.isDirectory()) {
-                    processDirectory(filepath);
+                    this.processDirectory(filepath);
                 } else if(fileStats.isFile()) {
-                    processFile(filepath);
+                    this.processFile(filepath);
                 }
             });
 
-            writeInFile();
+            this.writeInFile();
 
         } catch (error) {
             console.error(error)
@@ -54,9 +54,9 @@ module.exports = class MetaGenerator {
             filePath => {
                 const fileStats = fs.lstatSync(filePath)
                 if(fileStats.isDirectory()) {
-                    processDirectory(filePath);
+                    this.processDirectory(filePath);
                 } else if(fileStats.isFile()) {
-                    processFile(filePath);
+                    this.processFile(filePath);
                 }
             }
         )
@@ -67,7 +67,7 @@ module.exports = class MetaGenerator {
         if(path.extname(filePath) === ".yaml" 
             ||  path.extname(filePath) === ".yml") {
                 const doc = yaml.load(fs.readFileSync(filePath, 'utf8'));
-                processSpec(doc)
+                this.processSpec(doc)
         }
     }
     
@@ -80,7 +80,7 @@ module.exports = class MetaGenerator {
         let paths = doc.paths;
         for(let key in paths){
             console.log("Processing Path : " +key)
-            processPathObject(key, paths[key])
+            this.processPathObject(key, paths[key])
         }
     }
     
@@ -88,7 +88,7 @@ module.exports = class MetaGenerator {
         console.log("Processing Path : " +path)
         this.METHODS.forEach(method => {
             if(pathObject[method] != undefined && pathObject[method] != null){
-                output = processOperationObject(path, method, pathObject[method])
+                output = this.processOperationObject(path, method, pathObject[method])
                 this.result.push(output)
             }
         })
