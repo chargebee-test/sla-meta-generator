@@ -2,6 +2,7 @@
 
 value=`cat version.txt`
 value=`expr $value + 1`
+echo $value > version.txt
 
 ncc build index.js -o dist
 git add -- .
@@ -10,4 +11,3 @@ git push
 git tag `echo v$value`
 git push origin `echo v$value`
 
-echo $value > version.txt
