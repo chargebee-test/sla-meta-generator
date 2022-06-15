@@ -6148,7 +6148,7 @@ module.exports = class MetaGenerator {
         console.log("Processing Path : " +path)
         this.METHODS.forEach(method => {
             if(pathObject[method] != undefined && pathObject[method] != null){
-                output = this.processOperationObject(path, method, pathObject[method])
+                let output = this.processOperationObject(path, method, pathObject[method])
                 this.result.push(output)
             }
         })
