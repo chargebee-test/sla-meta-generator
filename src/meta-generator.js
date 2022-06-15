@@ -1,8 +1,9 @@
+
 const yaml = require('js-yaml');
 const fs   = require('fs');
 var path = require('path')
 
-export class MetaGenerator {
+module.exports = class MetaGenerator {
     
     METHODS = ["get","put","post","delete","options","head","patch","trace"]
     PATHS;
