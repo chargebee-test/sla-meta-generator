@@ -1,0 +1,29 @@
+{
+  "name": "sla-meta-generator",
+  "version": "1.0.0",
+  "description": "Generates SLA Metadata from the open API spec",
+  "main": "index.js",
+  "scripts": {
+    "build": "ncc build index.js -o dist",
+    "release": "ncc build index.js -o dist && git add -A && git commit -m \"new release\" && git push"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chargebee-test/sla-meta-generator.git"
+  },
+  "keywords": [],
+  "author": "christopher@chargebee.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chargebee-test/sla-meta-generator/issues"
+  },
+  "homepage": "https://github.com/chargebee-test/sla-meta-generator#readme",
+  "dependencies": {
+    "@actions/core": "^1.8.2",
+    "@actions/github": "^5.0.3",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.33.3"
+  }
+}

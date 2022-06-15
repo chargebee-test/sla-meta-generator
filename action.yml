@@ -1,0 +1,10 @@
+name: 'SLA Metadata Generator'
+description: 'Greet someone and record the time'
+inputs:
+  spec-files:
+    description: 'List of open API spec files.'
+    required: true
+    default: "[]"
+runs:
+  using: 'node16'
+  main: 'index.js'
