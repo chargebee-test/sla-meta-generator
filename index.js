@@ -50,16 +50,11 @@ function processDirectory(dirPath){
 
 function processFile(filePath) {
     console.log("Processing file : " + filePath)
-    console.log("File extension : "+path.extname(filePath));
-    console.log( path.extname(filePath) !== ".yaml" || path.extname(filePath) !== ".yml");
-    if(path.extname(filePath) !== ".yaml" 
-        || path.extname(filePath) !== ".yml") {
-        return;
+    if(path.extname(filePath) === ".yaml" 
+        ||  path.extname(filePath) === ".yml") {
+            const doc = yaml.load(fs.readFileSync(filePath, 'utf8'));
+            processSpec(doc)
     }
-    
-    console.log("Processing file started");
-    const doc = yaml.load(fs.readFileSync(filePath, 'utf8'));
-    processSpec(doc)
 }
 
 function processSpec(doc) {
