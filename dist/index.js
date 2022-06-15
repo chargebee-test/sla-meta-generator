@@ -13056,6 +13056,8 @@ try {
             processFile(filepath);
         }
     });
+
+    console.log(result);
 } catch (error) {
     console.error(error)
     core.setFailed(error.message);
