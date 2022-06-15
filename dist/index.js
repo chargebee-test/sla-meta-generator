@@ -13058,9 +13058,19 @@ try {
     });
 
     console.log(result);
+    writeInFile();
+
 } catch (error) {
     console.error(error)
     core.setFailed(error.message);
+}
+
+function writeInFile() {
+    const fileName = `${process.env.GITHUB_WORKSPACE}/${MICRO_SERVICE}-endpoints.json`
+    fs.open(fileName, 'w', function (err, file) {
+        if (err) throw err;
+        console.log('Saved!');
+    });
 }
 
 function processDirectory(dirPath){
