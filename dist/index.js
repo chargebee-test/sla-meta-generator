@@ -13076,7 +13076,7 @@ function processDirectory(dirPath){
 }
 
 function processFile(filePath) {
-    console.log("Processing file : " + dirPath)
+    console.log("Processing file : " + filePath)
 
     if(path.extname(filePath) !== ".yaml" 
         || path.extname(filePath) !== ".yml") {
