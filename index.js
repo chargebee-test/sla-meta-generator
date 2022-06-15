@@ -50,6 +50,7 @@ function processDirectory(dirPath){
 
 function processFile(filePath) {
     console.log("Processing file : " + filePath)
+    console.log("File extension : "+path.extname(filePath));
     console.log( path.extname(filePath) !== ".yaml" || path.extname(filePath) !== ".yml");
     if(path.extname(filePath) !== ".yaml" 
         || path.extname(filePath) !== ".yml") {
