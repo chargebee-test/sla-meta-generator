@@ -6,11 +6,12 @@ const fs   = require('fs');
 try {
     console.log(`Filename is ${__filename}`);
     console.log(`Directory name is ${__dirname}`)
-    console.log(process.env)
+    console.log(process.env.GITHUB_WORKSPACE)
 
     const specFiles = JSON.parse(core.getInput('spec-files'));
     specFiles.forEach(file => {
-        const doc = yaml.load(fs.readFileSync(file, 'utf8'));
+        const filepath = process.env.GITHUB_WORKSPACE + "/" +file;
+        const doc = yaml.load(fs.readFileSync(filepath, 'utf8'));
         console.log(doc);
     });
 } catch (error) {
