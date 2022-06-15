@@ -56,15 +56,20 @@ function processFile(filePath) {
         return;
     }
     
+    console.log("Processing file started");
     const doc = yaml.load(fs.readFileSync(filePath, 'utf8'));
     processSpec(doc)
 }
 
 function processSpec(doc) {
+    console.log("Processing spec : ");
+    console.log(doc);
+
     if(doc == null || doc == undefined) return;
 
     let paths = doc.paths;
     for(let key in paths){
+        console.log("Processing Path : " +key)
         processPathObject(key, paths[key])
     }
 }
