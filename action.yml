@@ -5,6 +5,9 @@ inputs:
     description: 'List of open API spec files.'
     required: true
     default: "[]"
+  micro-service:
+    description: "Microservice the repo belongs to."
+    required: true
 runs:
   using: 'node16'
   main: 'dist/index.js'

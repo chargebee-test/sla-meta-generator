@@ -13031,20 +13031,89 @@ const core = __nccwpck_require__(6847);
 const github = __nccwpck_require__(5107);
 const yaml = __nccwpck_require__(4159);
 const fs   = __nccwpck_require__(7147);
+var path = __nccwpck_require__(1017)
+
+const METHODS = ["get","put","post","delete","options","head","patch","trace"]
+const MICRO_SERVICE = core.getInput('micro-service');
+
+let result = [];
 
 try {
     console.log(`Filename is ${__filename}`);
     console.log(`Directory name is ${__dirname}`)
     console.log(process.env.GITHUB_WORKSPACE)
 
+    
     const specFiles = JSON.parse(core.getInput('spec-files'));
     specFiles.forEach(file => {
+
         const filepath = process.env.GITHUB_WORKSPACE + "/" +file;
-        const doc = yaml.load(fs.readFileSync(filepath, 'utf8'));
-        console.log(doc);
+        const fileStats = fs.lstatSync(filepath)
+        if(fileStats.isDirectory()) {
+            processDirectory(filepath);
+        } else if(fileStats.isFile()) {
+            processFile(filepath);
+        }
     });
 } catch (error) {
     core.setFailed(error.message);
+}
+
+function processDirectory(dirPath){
+    console.log("Processing directory : " + dirPath)
+    fs.readdirSync(dirPath).forEach(
+        filePath => {
+            const fileStats = fs.lstatSync(filePath)
+            if(fileStats.isDirectory()) {
+                processDirectory(filePath);
+            } else if(fileStats.isFile()) {
+                processFile(filePath);
+            }
+        }
+    )
+}
+
+function processFile(filePath) {
+    console.log("Processing file : " + dirPath)
+
+    if(path.extname(filePath) !== ".yaml" 
+        || path.extname(filePath) !== ".yml") {
+        return;
+    }
+    
+    const doc = yaml.load(fs.readFileSync(filePath, 'utf8'));
+    processSpec(doc)
+}
+
+function processSpec(doc) {
+    if(doc == null || doc == undefined) return;
+
+    let paths = doc.paths;
+    for(let key in paths){
+        processPathObject(key, paths[key])
+    }
+}
+
+function processPathObject(path,pathObject){
+    console.log("Processing Path : " +path)
+    METHODS.forEach(method => {
+        if(pathObject[method] != undefined && pathObject[method] != null){
+            output = processOperationObject(path, method, pathObject[method])
+            result.push(output)
+        }
+    })
+}
+
+function processOperationObject(path, method, operationObject) {
+    let output = {}
+    output.name = operationObject["operationId"]
+    output.url = path
+    output.method = method
+    output.sla_for_response_time = "M1"
+    output.criticality = ""
+    output.module = ""
+    output.micro_service = MICRO_SERVICE
+    return output
 }
 })();
 
